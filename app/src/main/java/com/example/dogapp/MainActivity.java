@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private DogsApiService apiService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +30,6 @@ public class MainActivity extends AppCompatActivity {
         View viewRoot = binding.getRoot();
         setContentView(viewRoot);
 
-        apiService = new DogsApiService();
-        apiService.getDogs()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<List<DogBreed>>() {
-                    @Override
-                    public void onSuccess(@NonNull List<DogBreed> dogBreeds) {
-                        Log.d("DEBUG", "Success");
-                        for(DogBreed dog: dogBreeds){
-                            Log.d("DEBUG", dog.getName()+" ");
-                        }
-                    }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.d("DEBUG", "Fail");
-                    }
-                });
     }
 }
